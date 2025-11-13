@@ -1,6 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import {
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 function baseSuggestions(category) {
   if (!category) return [];
@@ -8,12 +18,12 @@ function baseSuggestions(category) {
   // suggerimenti semplici in base alla categoria
   if (c.includes("ristorante")) {
     return [
-      "ristorante ",
+      "ristorante",
       "ristorante di pesce",
       "ristorante carne",
       "trattoria",
       "osteria",
-      "pizzeria"
+      "pizzeria",
     ];
   }
   if (c.includes("parrucchiere") || c.includes("hair")) {
@@ -22,7 +32,7 @@ function baseSuggestions(category) {
       "parrucchiere uomo",
       "parrucchiere donna",
       "barbiere",
-      "salone di bellezza"
+      "salone di bellezza",
     ];
   }
   if (c.includes("palestra") || c.includes("fitness")) {
@@ -31,11 +41,16 @@ function baseSuggestions(category) {
       "palestra 24 ore",
       "centro fitness",
       "personal trainer",
-      "crossfit"
+      "crossfit",
     ];
   }
   // fallback generico
-  return [category, `${category} economico`, `${category} centro`, `${category} aperto ora`];
+  return [
+    category,
+    `${category} economico`,
+    `${category} centro`,
+    `${category} aperto ora`,
+  ];
 }
 
 export default function RankAnalyzerPage() {
@@ -51,22 +66,13 @@ export default function RankAnalyzerPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [analysis, setAnalysis] = useState(null);
-    function handleExportPDF() {
+
+  // EXPORT PDF
+  function handleExportPDF() {
     if (typeof window !== "undefined") {
       window.print();
     }
   }
-import {
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
-
 
   function handleSuggestKeywords() {
     const base = baseSuggestions(category || mainKeyword || "");
@@ -106,8 +112,8 @@ import {
         body: JSON.stringify({
           keywords: keywordsToUse,
           city: city.trim(),
-          maxResults: 10
-        })
+          maxResults: 10,
+        }),
       });
 
       const data = await res.json();
@@ -163,12 +169,13 @@ import {
         <div className="md:col-span-2 space-y-4">
           {tab === "category" && (
             <div className="rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm p-4 shadow-lg space-y-4 text-white">
-
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                  <label className="mb-1 block text-sm font-medium">Città</label>
+                  <label className="mb-1 block text-sm font-medium">
+                    Città
+                  </label>
                   <input
-                    className="w-full rounded border px-3 py-2"
+                    className="w-full rounded border px-3 py-2 text-black"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                   />
@@ -178,7 +185,7 @@ import {
                     Indirizzo specifico (opzionale)
                   </label>
                   <input
-                    className="w-full rounded border px-3 py-2"
+                    className="w-full rounded border px-3 py-2 text-black"
                     value={specificAddress}
                     onChange={(e) => setSpecificAddress(e.target.value)}
                     placeholder="es. Via Dante"
@@ -192,7 +199,7 @@ import {
                     Categoria attività
                   </label>
                   <input
-                    className="w-full rounded border px-3 py-2"
+                    className="w-full rounded border px-3 py-2 text-black"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                     placeholder="es. ristorante, parrucchiere..."
@@ -203,7 +210,7 @@ import {
                     Keyword principale
                   </label>
                   <input
-                    className="w-full rounded border px-3 py-2"
+                    className="w-full rounded border px-3 py-2 text-black"
                     value={mainKeyword}
                     onChange={(e) => setMainKeyword(e.target.value)}
                     placeholder="es. ristorante di pesce"
@@ -223,8 +230,6 @@ import {
                   type="button"
                   onClick={handleQuickAnalyze}
                   className="rounded-full bg-green-600 px-4 py-2 text-sm font-medium text-white"
-                  <button
-
                   disabled={loading}
                 >
                   {loading ? "Analizzo..." : "Analizza con questa Keyword"}
@@ -311,13 +316,12 @@ import {
                 Pulisci Cache
               </button>
               <button
-  type="button"
-  onClick={handleExportPDF}
-  className="rounded-full border px-4 py-2 text-sm bg-white/10 text-gray-200 hover:bg-white/20 transition"
->
-  Esporta in PDF
-</button>
-
+                type="button"
+                onClick={handleExportPDF}
+                className="rounded-full border px-4 py-2 text-sm bg-white/10 text-gray-700 hover:bg-white/20 transition"
+              >
+                Esporta in PDF
+              </button>
             </div>
           </div>
         </div>
@@ -325,13 +329,17 @@ import {
         {/* Colonna destra: spiegazione + risultati */}
         <div className="space-y-4">
           <div className="rounded-xl border bg-white p-4 shadow-sm space-y-3">
-            <h2 className="text-lg font-semibold">Benvenuto!</h2>
+            <h2 className="text-lg font-semibold">
+              Benvenuto nell’Italiaonline GBP Analyzer
+            </h2>
             <p className="text-sm text-gray-700">
               Questa applicazione ti aiuta a scoprire quali attività
               commerciali compaiono più spesso nei primi risultati di Google
               Maps per un determinato settore e una determinata area.
             </p>
-            <h3 className="text-sm font-semibold">Come funziona (flusso iterativo)</h3>
+            <h3 className="text-sm font-semibold">
+              Come funziona (flusso iterativo)
+            </h3>
             <ol className="list-decimal pl-5 text-sm text-gray-700 space-y-1">
               <li>
                 <strong>Suggerimento:</strong> inserisci città, categoria e
@@ -417,6 +425,9 @@ import {
                 </div>
               </div>
 
+              {/* Radar competitivo */}
+              <RadarCompetitive analysis={analysis} />
+
               {/* Dettaglio per keyword */}
               <div className="rounded-xl border bg-white p-4 shadow-sm space-y-3">
                 <h2 className="text-md font-semibold">
@@ -461,5 +472,87 @@ import {
         </div>
       </div>
     </main>
+  );
+}
+
+function RadarCompetitive({ analysis }) {
+  if (
+    !analysis ||
+    !analysis.leaderboard ||
+    analysis.leaderboard.length === 0
+  ) {
+    return null;
+  }
+
+  const top = analysis.leaderboard.slice(0, 5);
+
+  const maxApp = Math.max(...top.map((b) => b.appearances));
+  const maxBest = Math.max(...top.map((b) => b.bestRank));
+  const maxAvg = Math.max(...top.map((b) => b.avgRank));
+
+  const data = [
+    {
+      metric: "Apparizioni",
+      ...Object.fromEntries(
+        top.map((b, idx) => [
+          `b${idx}`,
+          maxApp ? (b.appearances / maxApp) * 100 : 0,
+        ])
+      ),
+    },
+    {
+      metric: "Miglior posizione",
+      ...Object.fromEntries(
+        top.map((b, idx) => [
+          `b${idx}`,
+          maxBest ? ((maxBest - b.bestRank + 1) / maxBest) * 100 : 0,
+        ])
+      ),
+    },
+    {
+      metric: "Posizione media",
+      ...Object.fromEntries(
+        top.map((b, idx) => [
+          `b${idx}`,
+          maxAvg ? ((maxAvg - b.avgRank + 1) / maxAvg) * 100 : 0,
+        ])
+      ),
+    },
+  ];
+
+  const series = top.map((b, idx) => ({
+    key: `b${idx}`,
+    name: b.name,
+  }));
+
+  return (
+    <div className="rounded-xl border bg-white p-4 shadow-sm space-y-2">
+      <h2 className="text-md font-semibold">
+        Radar competitivo (top {top.length} attività)
+      </h2>
+      <p className="text-xs text-gray-500">
+        Più vicino al bordo = performance migliore sulla metrica.
+      </p>
+      <div className="h-64">
+        <ResponsiveContainer width="100%" height="100%">
+          <RadarChart data={data}>
+            <PolarGrid />
+            <PolarAngleAxis dataKey="metric" />
+            <PolarRadiusAxis angle={30} domain={[0, 100]} />
+            {series.map((s) => (
+              <Radar
+                key={s.key}
+                name={s.name}
+                dataKey={s.key}
+                strokeOpacity={0.8}
+                fillOpacity={0.15}
+              />
+            ))}
+            <Tooltip />
+            <Legend />
+          </RadarChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
   );
 }
