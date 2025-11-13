@@ -555,4 +555,4 @@ function RadarCompetitive({ analysis }) {
       </div>
     </div>
   );
-}
+} 
