@@ -56,6 +56,16 @@ export default function RankAnalyzerPage() {
       window.print();
     }
   }
+import {
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 
   function handleSuggestKeywords() {
