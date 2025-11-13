@@ -51,6 +51,12 @@ export default function RankAnalyzerPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [analysis, setAnalysis] = useState(null);
+    function handleExportPDF() {
+    if (typeof window !== "undefined") {
+      window.print();
+    }
+  }
+
 
   function handleSuggestKeywords() {
     const base = baseSuggestions(category || mainKeyword || "");
@@ -207,6 +213,8 @@ export default function RankAnalyzerPage() {
                   type="button"
                   onClick={handleQuickAnalyze}
                   className="rounded-full bg-green-600 px-4 py-2 text-sm font-medium text-white"
+                  <button
+
                   disabled={loading}
                 >
                   {loading ? "Analizzo..." : "Analizza con questa Keyword"}
@@ -292,6 +300,14 @@ export default function RankAnalyzerPage() {
               >
                 Pulisci Cache
               </button>
+              <button
+  type="button"
+  onClick={handleExportPDF}
+  className="rounded-full border px-4 py-2 text-sm bg-white/10 text-gray-200 hover:bg-white/20 transition"
+>
+  Esporta in PDF
+</button>
+
             </div>
           </div>
         </div>
