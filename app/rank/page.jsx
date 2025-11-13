@@ -146,7 +146,8 @@ export default function RankAnalyzerPage() {
         {/* Colonna sinistra: form principale */}
         <div className="md:col-span-2 space-y-4">
           {tab === "category" && (
-            <div className="rounded-xl border bg-white p-4 shadow-sm space-y-4">
+            <div className="rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm p-4 shadow-lg space-y-4 text-white">
+
               <div className="grid gap-4 md:grid-cols-2">
                 <div>
                   <label className="mb-1 block text-sm font-medium">Città</label>
